@@ -1,0 +1,17 @@
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\bin\Debug\net6.0\MyForum.DAL.deps.json
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\bin\Debug\net6.0\MyForum.DAL.runtimeconfig.json
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\bin\Debug\net6.0\MyForum.DAL.dll
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\bin\Debug\net6.0\MyForum.DAL.pdb
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\bin\Debug\net6.0\MyForum.BL.dll
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\bin\Debug\net6.0\MyForum.BL.pdb
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\MyForum.DAL.csproj.AssemblyReference.cache
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\MyForum.DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\MyForum.DAL.AssemblyInfoInputs.cache
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\MyForum.DAL.AssemblyInfo.cs
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\MyForum.DAL.csproj.CoreCompileInputs.cache
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\MyForum.DAL.csproj.CopyComplete
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\MyForum.DAL.dll
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\refint\MyForum.DAL.dll
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\MyForum.DAL.pdb
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\MyForum.DAL.genruntimeconfig.cache
+D:\Users\dell\source\repos\MyForum\MyForum.DAL\obj\Debug\net6.0\ref\MyForum.DAL.dll

@@ -1,0 +1,39 @@
+﻿@model MyForum.Web.Models.Blog.BlogPostModel
+
+<h1>Welcome to the  @Model.Blog.Name Forum!</h1>
+@if (Model.Posts.Any())
+{
+    <table>
+        <tbody>
+            @foreach (var post in Model.Posts)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                            @post.Title
+                        </a>
+                    </td>
+                    <td>@post.AuthorName</td>
+                    <td>@post.DatePosted</td>
+                    <td>@post.RepliesCount</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class=" =" noPosts>
+        <h3>
+            There is no current Posts in @Model.Blog.Name at the moment <br />
+
+            <a asp-controller="Post" asp-action="Create" asp-route-id="@Model.Blog.Id">
+                <span>Create One here!</span>
+            </a>
+        </h3>
+
+    </div>
+
+}
+

@@ -1,0 +1,30 @@
+﻿
+@model MyForum.Web.Models.Blog.BlogIndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index Blogs </h1>
+
+<table class="table table-bordered table-striped" >
+   
+    <tbody>
+        @foreach (var blog in Model.BlogList)
+        {
+           
+            <tr>
+               
+                <td>
+                    <a asp-controller="Forum" asp-action="Topic" asp-route-id="@blog.Id">
+                    @blog.Name
+                    </a>
+                </td>
+                <td>
+                    @blog.Description
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
