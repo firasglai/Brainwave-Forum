@@ -15,10 +15,11 @@ namespace MyForum.Web.Services
             _context = context;
         }
 
-        public Task Add(Post post)
+        public async Task Add(Post post)
         {
-            throw new NotImplementedException();
-        }
+            _context.Add(post);
+            await _context.SaveChangesAsync();
+        }   
 
         public Task Delete(int id)
         {
@@ -37,13 +38,12 @@ namespace MyForum.Web.Services
 
         public Post GetById(int id)
         {
-            var post = _context.Posts.Where(post => post.PostId == id)
+            return _context.Posts.Where(post => post.PostId == id)
                 .Include(post => post.User)
-                .Include(post => post.Replies)
+                .Include(post => post.Replies).ThenInclude(reply => reply.User)
                 .Include(post => post.Blog)
                 .First();
-                return post;
-                }
+                } 
         public List<Post> GetFilteredPosts(string searchQuery)
         {
             throw new NotImplementedException();

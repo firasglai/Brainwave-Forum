@@ -14,7 +14,7 @@ namespace MyForum.Web.Models.Post
         public DateTime Created { get; set; }
         public string PostContent { get; set; }
 
-        public List<PostReplyModel> Replies { get; set; }
+        public IEnumerable<PostReplyModel> Replies { get; set; }
 
         
 

@@ -52,6 +52,7 @@ namespace MyForum.Web.Controllers
             { 
                 Id = post.PostId,
                 AuthorId = post.User.Id,
+                AuthorName = post.User.UserName,
                 Title = post.Title,
                 DatePosted = post.PublishedDateTime.ToString(),
                 RepliesCount = post.Replies.Count(),

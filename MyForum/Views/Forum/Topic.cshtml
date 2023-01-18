@@ -1,9 +1,12 @@
 ﻿@model MyForum.Web.Models.Blog.BlogPostModel
 
 <h1>Welcome to the  @Model.Blog.Name Forum!</h1>
+
+<span id="headingBtn">
+    <a asp-controller="Post" asp-action="Create" asp-route-id="@Model.Blog.Id" class="btn btn-newPost">Create new Post</a></span>
 @if (Model.Posts.Any())
 {
-    <table>
+    <table class="table table-bordered table-hover">
         <tbody>
             @foreach (var post in Model.Posts)
             {
