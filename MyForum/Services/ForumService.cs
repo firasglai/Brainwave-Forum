@@ -42,10 +42,6 @@ namespace MyForum.Web.Services
                 .Include(blog => blog.Posts).ThenInclude(p => p.User)
                 .Include(b => b.Posts).ThenInclude(p => p.Replies).ThenInclude(r => r.User)
                 .FirstOrDefault();
-
-
-
-
             return blog;
 
                  }              

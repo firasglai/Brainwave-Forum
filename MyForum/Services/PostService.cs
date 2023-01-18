@@ -33,7 +33,11 @@ namespace MyForum.Web.Services
 
         public List<Post> GetAll()
         {
-            throw new NotImplementedException();
+          var posts = _context.Posts
+                .Include(post => post.User)
+                .Include(post => post.Replies).ThenInclude(reply => reply.User)
+                .Include(post => post.Blog);
+            return posts.ToList();
         }
 
         public Post GetById(int id)
@@ -47,6 +51,11 @@ namespace MyForum.Web.Services
         public List<Post> GetFilteredPosts(string searchQuery)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Post> GetLatestPosts(int x)
+        {
+            return GetAll().OrderByDescending(post => post.PublishedDateTime).Take(x);
         }
 
         public List<Post> GetPostByBlog(int id)

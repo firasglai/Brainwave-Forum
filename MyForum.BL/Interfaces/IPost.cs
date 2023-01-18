@@ -14,11 +14,15 @@ namespace MyForum.BL.Interfaces
         List<Post> GetAll();
         List<Post> GetFilteredPosts(string searchQuery);
         List<Post> GetPostByBlog(int id);
+
+       IEnumerable<Post> GetLatestPosts(int x);
+
         Task Add(Post post);
         Task Delete(int id);
       //  Task AddReply(PostReply reply);
         Task EditPostContent(int id, string newContent);
 
+      
         
 
 
