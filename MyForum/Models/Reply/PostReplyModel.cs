@@ -15,7 +15,7 @@
         public string ReplyContent { get; set; }
         public int PostId { get; set; }
 
-
+        public bool isAuthorAdmin { get; set; }
 
     }
 }

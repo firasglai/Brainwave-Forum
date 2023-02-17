@@ -23,7 +23,8 @@ namespace MyForum.Web.Services
         public Task Delete(int blogId)
         {
             throw new NotImplementedException();
-        }
+           
+                }
 
         public List<Blog> GetAll()
         {

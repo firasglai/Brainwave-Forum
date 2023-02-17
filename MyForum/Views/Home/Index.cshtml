@@ -1,68 +1,81 @@
 ﻿@model MyForum.Web.Models.Home.HomeIndexModel
 
-<div class="container body-content">
+<div class="container  justify-content-center">
 
-    <div class="row frontPageSplash ">
-        <div class="col-md-6 frontPageLearn">
-            <div class=" frontPageHeading">Learn , Collaborate , Share </div>
-            <p class="frontPageSubHeading">subheading here... </p>
-            <div>
-                <form asp-controller="Search" asp-action="Search" method="post">
-
-                    <input asp-for="SearchQuery" type="text" class="homeSearch" placeholder="Search Topics ... "/>
-                </form>
-                
-            </div>
+    <div class="row frontPageSplash" align="center">
+        <div class="col-md-12 frontPageLearn">
+            
+            <figure class="text-center">
+                <blockquote class="blockquote">
+                    <p class="mb-0">Learn , Collaborate , Share.</p>
+                </blockquote>
+            </figure>
+            <hr />
         </div>
 
-        <div class="col-md-6"> </div> 
+        
     </div>
-    <div class="row frontPageContent"> 
-        <h3 id="latestsPosts">LatestPosts</h3>
-        <table class="table table-hover">
-            <tbody>
-                      @foreach (var post in Model.LatestPosts)
-                      {
-                            <tr>
-                                <td>
-                                    <div class="forumLogo" style="background-image: url(@post.Blog.ImageUrl); background-size=100%"></div>
-                                    <div class="postTitle">
-                                        <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
-                                            @post.Title
-                                        </a>
-                                    </div>
 
-                                    <div class="postSubtitle">
-                                        @if(post.RepliesCount == 1)
-                                        {
-                                            <span>
-                                                @post.RepliesCount Reply
-                                            </span>
-                                        }
-                                      @if (post.RepliesCount == 0)
-                                        {
-                                           <span>
-                                               No Replies
-                                           </span>
-                                        }
-                                        else 
-                                        {
-                                            <span>@post.RepliesCount Replies </span>
-                                        }
-                                        <span class="postUser"><a asp-controller="Profile" asp-action="Detail" asp-route-id="@post.AuthorId">@post.AuthorName</a> </span>
-                                     </div>
-                                </td>
-                            </tr>
-
-                          
-                      }  
-            </tbody>
-           
-
-
-        </table>
-
-
+    <div class="align-content-center">
+        <form class="d-flex" asp-controller="Search" asp-action="Search" method="post">
+            <input asp-for="SearchQuery" type="text" class="form-control me-sm-2" placeholder="Search Topics ... ">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </div>
+    <hr />
+    <div align="center" > 
+        <h3 id="latestsPosts" class="">Latest Posts</h3>
+       
+    </div>
+    
+    <div class="row justify-content-between container-fluid align-content-center">
+        @foreach (var post in Model.LatestPosts)
+        {
+
+            <div class="card border-light mb-3" style="max-width: 20rem;">
+         
+                
+
+                    <img src="@post.Blog.ImageUrl" style="background-size:100%" height="50" width="50"></img>
+             
+                                
+             <div class="card-header">
+                    <b>Blog:</b> @post.Blog.Name
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">@post.Title</a>
+                    </h4>
+                    <p class="card-text">
+                        @if (post.RepliesCount == 1)
+                        {
+                            <span>
+                                @post.RepliesCount Reply
+                            </span>
+                        }
+                        @if (post.RepliesCount == 0)
+                        {
+                            <span>
+                                No Replies
+                            </span>
+                        }
+                        else
+                        {
+                            <span>@post.RepliesCount Replies </span>
+                        }
+                    </p>
+                    <b>Posted By</b>  <span class="postUser"><a asp-controller="Profile" asp-action="Detail" asp-route-id="@post.AuthorId"> :@post.AuthorName</a> </span>
+                </div>
+
+
+            </div>
+        }
+    </div>
+
+   
 
 </div>
+
+
+
+

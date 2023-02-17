@@ -1,32 +1,95 @@
 ﻿@model MyForum.Web.Models.Post.PostIndexModel
 
 
-<h1>@Model.Title</h1>
-
-<div>
-    Author : @Model.AuthorName 
-    Created : @Model.Created
-
+<div class="postHeader ">
+        
+        <h3>@Model.Title</h3>
+ 
+        <button style=" float: right;" type="button" class="btn btn-outline-info">
+                Go Back To Blog
+            </button>  
 </div>
+<!-- Accordion-->
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Accordion Item #1
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+            <div class="accordion-body">
+                <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+            </div>
+        </div>
+    </div>
+    
+   
 
-<div>
-    @Model.PostContent
-</div>
 
-@if (Model.Replies.Any())
+<div class="row" id="postIndexContent">
+<div class="col-md-3 postAuthorConatiner">
+    <div class="postAuthorImage" style="background-image: url(@Model.AuthorImageUrl);">
+        <a asp-controller="Profile" asp-action="Detail" asp-route-id="@Model.AuthorId">@Model.AuthorName</a>
+        <span class="postData"> Post Date:@Model.Created</span>
+        @if(Model.isAuthorAdmin)
+            {
+                <span class="IsAdmin Smaller">Admin</span>
+                <br />
+            }
+    </div>
+            
+    <div class="col-md-9 postContenContainer">
+        <div class="postContent">
+            @Html.Raw(Model.PostContent)
+        </div>
+    </div>
+</div>  
+<div class="row" id="replyDivider">
+    @if(User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <span>
+                <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-info">
+                    Post Reply 
+                </a>
+            </span>
+        </div>   
+            }
+@if(Model.Replies.Any())
 {
-  foreach(var reply in Model.Replies)
-  {
-      <div>
-        <div>
-            Reply Author : @reply.AuthorName
-            Reply Created : @reply.Created
-        </div>
+    foreach (var reply in Model.Replies)
+    {
+        <div class="row replyContent">
+            <div class="col-md-3 replyAuthorContainer">
+                <div class="postAuthorImage" style="background-image: url(@reply.AuthorImageUrl)"></div>
+                <a asp-controller="Profile" asp-action="Detail" asp-route-id="@reply.AuthorId">
+                    @reply.AuthorName
+                </a>
+                @if (reply.isAuthorAdmin)
+                {
+                    <div class="isAdmin smaller">Admin</div>
+                    <br />
 
-        <div>
-           Reply: @reply.ReplyContent
-        </div>
+                }
+                <h4>@reply.Created</h4>
+            </div>
+           <div class="col-md-9 replyContentContainer">
+               <div class="postContent">
+                   @Html.Raw(reply.ReplyContent)
+               </div>
+           </div>
 
-      </div>
-  }
+        </div>
+    }
 }
+else {
+
+    <div class="noPosts">
+        <h2>There are no replies to this post.</h2>
+            </div>
+}
+      
+
+
+

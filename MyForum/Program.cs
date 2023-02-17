@@ -4,7 +4,7 @@ using MyForum.DAL;
 using MyForum.BL.Entities;
 using MyForum.BL.Interfaces;
 using MyForum.Web.Services;
-
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,13 +14,16 @@ builder.Services.AddDbContext<MyForumDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<MyForumDbContext>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+
+/*Manual Services Section (Transient or Scoped)*/
 builder.Services.AddScoped<IForum,ForumService>();
 builder.Services.AddScoped<IPost,PostService>();
 var app = builder.Build();
@@ -37,6 +40,13 @@ else
     app.UseHsts();
 }
 
+
+/*Uploading Images
+builder.Services.AddSingleton<IFileProvider>(
+new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images"))
+);
+app.UseStaticFiles();
+*/
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

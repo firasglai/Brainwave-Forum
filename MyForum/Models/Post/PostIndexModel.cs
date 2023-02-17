@@ -13,9 +13,12 @@ namespace MyForum.Web.Models.Post
         public byte[]? AuthorImageUrl { get; set; }
         public DateTime Created { get; set; }
         public string PostContent { get; set; }
-
         public IEnumerable<PostReplyModel> Replies { get; set; }
+        
+        public bool isAuthorAdmin { get; set; }
 
+        public int BlogId { get; set; }
+         public string BlogName { get; set; }
         
 
     }

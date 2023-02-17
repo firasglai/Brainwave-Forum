@@ -57,7 +57,9 @@ namespace MyForum.Controllers
             {
                 Id = blog.BlogId,
                 Name = blog.BlogName,
-                Description = blog.BlogDescription
+                Description = blog.BlogDescription,
+                ImageUrl=blog.ImageUrl
+                
             };
         }
 

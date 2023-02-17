@@ -6,12 +6,16 @@ using MyForum.Web.Models.Reply;
 using System.Threading.Tasks;
 using NuGet.Protocol;
 using Microsoft.AspNetCore.Identity;
+using System.Threading;
 
 namespace MyForum.Web.Controllers
 {
     public class PostController : Controller
     {
+        
         private static UserManager<User> _userManager;
+        
+        
         private readonly IPost _postService;
         private readonly IForum _forumService;
 
@@ -20,6 +24,7 @@ namespace MyForum.Web.Controllers
             _postService = postService;
             _forumService = forumService;
             _userManager = userManager;
+        
         }
 
         public IActionResult Index( int id )
@@ -33,17 +38,22 @@ namespace MyForum.Web.Controllers
                 AuthorName = post.User.UserName,
                 AuthorId = post.User.Id,
                 AuthorImageUrl =post.User.ProfilePicture,
-                Created = DateTime.Now,
+                Created = post.PublishedDateTime,
                 PostContent = post.Content,
-                Replies = replies
-
-            };
+                Replies = replies,
+                BlogId = post.Blog.BlogId,
+                BlogName = post.Blog.BlogName,
+                isAuthorAdmin = isAuthorAdmin(post.User)
+             };
             return View(model);
         }
+
+       
 
         public IActionResult Create(int id)
         {
             var blog = _forumService.GetById(id);
+            
 
             var model = new NewPostModel
             {
@@ -52,11 +62,12 @@ namespace MyForum.Web.Controllers
                 BlogName = blog.BlogName,
                 BlogImageUrl = blog.ImageUrl,
                 AuthorName = User.Identity.Name
-
             };
 
             return View(model);
         }
+
+
 
 
 
@@ -70,6 +81,18 @@ namespace MyForum.Web.Controllers
             await _postService.Add(post);
             return RedirectToAction("Index", "Post", new {id = post.PostId });
         }
+
+        
+        private bool isAuthorAdmin(User user)
+        {
+
+          //  return _userRoleStore.GetRolesAsync(user).Result.Contains("Admin");
+           return _userManager.GetRolesAsync(user).Result.Contains("Admin");
+            
+
+        }
+        
+        
 
         private Post BuildPost(NewPostModel model, User user)
         {
@@ -94,7 +117,8 @@ namespace MyForum.Web.Controllers
                 AuthorId=reply.User.Id,
                 AuthorImageUrl=reply.User.ProfilePicture,
                 Created=reply.Created,
-                ReplyContent=reply.Content
+                ReplyContent=reply.Content,
+                isAuthorAdmin =isAuthorAdmin(reply.User)
 
             });
         }
