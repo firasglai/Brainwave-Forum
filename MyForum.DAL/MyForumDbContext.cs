@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MyForum.BL.Entities;
+using System.Reflection.Emit;
+
 namespace MyForum.DAL
 {
     public class MyForumDbContext : IdentityDbContext<User>
@@ -20,7 +23,6 @@ namespace MyForum.DAL
 
       
         protected override void OnModelCreating(ModelBuilder builder)
-
 
         {
             base.OnModelCreating(builder);
@@ -53,10 +55,16 @@ namespace MyForum.DAL
             {
                 entity.ToTable("UserTokens");
             });
-        
 
 
+            
+           
         }
-       
+
+
+
+
+
+
     }
 }

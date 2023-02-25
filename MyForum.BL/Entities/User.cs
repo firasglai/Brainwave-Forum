@@ -9,5 +9,8 @@ namespace MyForum.BL.Entities
         // maybe set it to string
         public byte[]? ProfilePicture { get; set; }
 
+
+
+
     }
 }

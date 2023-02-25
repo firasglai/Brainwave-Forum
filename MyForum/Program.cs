@@ -5,6 +5,7 @@ using MyForum.BL.Entities;
 using MyForum.BL.Interfaces;
 using MyForum.Web.Services;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Services.AddDbContext<MyForumDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = true; options.User.RequireUniqueEmail = true; })// ensure that all users have unique email addresses and ConfirmedAccounts
     .AddEntityFrameworkStores<MyForumDbContext>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
@@ -22,13 +23,48 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-
 /*Manual Services Section (Transient or Scoped)*/
-builder.Services.AddScoped<IForum,ForumService>();
-builder.Services.AddScoped<IPost,PostService>();
+builder.Services.AddScoped<IForum, ForumService>();
+builder.Services.AddScoped<IPost, PostService>();
+builder.Services.AddScoped<IUser, UserService>();
+
+// Configure Authorization Policies
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ModeratorOnly", policy =>
+        policy.RequireRole("Moderator"));
+});
+
+// Configure Roles (Moderator and Visitor)
+using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+        // Create the "Moderator" role if it doesn't already exist
+        if (!await roleManager.RoleExistsAsync("Moderator"))
+        {
+            await roleManager.CreateAsync(new IdentityRole("Moderator"));
+        }
+
+        // Create the "Visitor" role if it doesn't already exist
+        if (!await roleManager.RoleExistsAsync("Visitor"))
+        {
+            await roleManager.CreateAsync(new IdentityRole("Visitor"));
+        }
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while creating the roles.");
+    }
+}
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -39,7 +75,6 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 
 /*Uploading Images
 builder.Services.AddSingleton<IFileProvider>(
